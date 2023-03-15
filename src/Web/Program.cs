@@ -5,6 +5,7 @@ using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using Infrastructure.Repositories.GeoMedellin;
 using Core.Services;
+using Microsoft.Extensions.Http;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -13,7 +14,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<ITouristPlaceService, TouristPlaceService>();
 builder.Services.AddScoped<ITouristPlaceRepository, TouristSiteRepository>();
 
-//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddScoped(sp => new HttpClient ());
+builder.Services.AddHttpClient();
 
 await builder.Build().RunAsync();
