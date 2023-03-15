@@ -1,0 +1,38 @@
+@page "/tourist-sites"
+@inject ITouristPlaceService touristPlaceService;
+
+@if(touristPlaces?.Count > 0)
+{
+    <div class="products-container">
+        @foreach (var touristPlace in touristPlaces)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <h4><b>@touristPlace.Name</b></h4>
+                    <p>Attraction: @touristPlace.TouristFeature.Name</p>
+                    <p>Address: @touristPlace.Neighborhood.Address</p>
+                    <p>Neighborhood: @touristPlace.Neighborhood.Name</p>
+                    <p>Commune: @touristPlace.Neighborhood.Commune</p>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>0 Tourist Sites</p>
+}
+
+@code {
+    private List<TouristPlace>? touristPlaces;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        touristPlaces = await GetAsync();
+    }
+
+    private async Task<List<TouristPlace>?> GetAsync()
+    {
+        return await touristPlaceService.GetAsync();
+    }
+}
